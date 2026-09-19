@@ -136,7 +136,7 @@ with (Session() as session):
     stmt = (
         select(Category.name, func.count(Product.id))
         .select_from(Category)
-        .join(Product, Product.category_id == Category.id)
+        .outerjoin(Product, Product.category_id == Category.id)
         .group_by(Category.name)
     )
 
@@ -156,7 +156,7 @@ with (Session() as session):
         select(
             Category.name, func.count(Product.id))
         .select_from(Product)
-        .join(Category, Product.category_id == Category.id)
+        .outerjoin(Category, Product.category_id == Category.id)
         .group_by(Category.name)
         .having(func.count(Product.id) > 1)
 
